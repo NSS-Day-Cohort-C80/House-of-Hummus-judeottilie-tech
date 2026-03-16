@@ -7,4 +7,3 @@ const renderAllHTML = () => {
 }
 
 renderAllHTML()
-

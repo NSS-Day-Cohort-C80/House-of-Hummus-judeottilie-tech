@@ -2,12 +2,12 @@ import { getEntrees } from "./dataAccess.js"
 import { setEntree } from "./transientState.js"
 
 export const Entrees = async () => {
-    const entrees = await getEntrees()
+    const entreesArray = await getEntrees()
 
     const html = `
         <section class="entrees">
             <h2>Entrees</h2>
-            ${entrees.map(entree => `
+            ${entreesArray.map(entree => `
                 <div>
                     <input 
                         type="radio" 

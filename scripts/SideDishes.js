@@ -2,12 +2,12 @@ import { getSides } from "./dataAccess.js"
 import { setSide } from "./transientState.js"
 
 export const SideDishes = async () => {
-    const sides = await getSides()
+    const sidesArray = await getSides()
 
     const html = `
         <section class="sides">
             <h2>Side Dishes</h2>
-            ${sides.map(side => `
+            ${sidesArray.map(side => `
                 <div>
                     <input 
                         type="radio" 

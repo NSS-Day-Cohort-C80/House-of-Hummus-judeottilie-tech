@@ -3,9 +3,9 @@ import { getOrder, isOrderComplete, clearOrder } from "./transientState.js"
 import { FoodTruck } from "./FoodTruck.js"
 
 export const Sales = async () => {
-    const purchases = await getPurchases()
+    const purchasesArray = await getPurchases()
 
-    const html = purchases.map(purchase => `
+    const html = purchasesArray.map(purchase => `
         <p>Receipt #${purchase.id} = $${purchase.total.toFixed(2)}</p>
     `).join("")
 
@@ -18,13 +18,13 @@ export const SalesEvents = () => {
             if (isOrderComplete()) {
                 const order = getOrder()
 
-                const entrees = await getEntrees()
-                const vegetables = await getVegetables()
-                const sides = await getSides()
+                const entreesArray = await getEntrees()
+                const vegetablesArray = await getVegetables()
+                const sidesArray = await getSides()
 
-                const entree = entrees.find(e => e.id === order.entreeId)
-                const vegetable = vegetables.find(v => v.id === order.vegetableId)
-                const side = sides.find(s => s.id === order.sideId)
+                const entree = entreesArray.find(e => e.id === order.entreeId)
+                const vegetable = vegetablesArray.find(v => v.id === order.vegetableId)
+                const side = sidesArray.find(s => s.id === order.sideId)
 
                 const total = entree.price + vegetable.price + side.price
 

@@ -5,7 +5,7 @@ import { SideDishes, SideDishEvents } from "./SideDishes.js"
 import { SalesEvents } from "./Sales.js"
 
 export const FoodTruck = async () => {
-    document.querySelector("#app").innerHTML = `
+    document.querySelector("#container").innerHTML = `
         <header class="header">
             <img src="./images/hummus.png" class="logo" />
             <h1 class="title">Laura Kathryn's House of Hummus</h1>

@@ -14,7 +14,7 @@ export const Sales = async () => {
 
 export const SalesEvents = () => {
     document.addEventListener("click", async (event) => {
-        if (event.target.id === "purchase__btn") {
+        if (event.target.id === "purchase") {
             if (isOrderComplete()) {
                 const order = getOrder()
 

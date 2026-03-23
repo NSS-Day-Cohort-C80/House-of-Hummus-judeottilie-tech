@@ -1,19 +1,19 @@
 const baseURL = "http://localhost:8088"
 
 export const getEntrees = () => {
-    return fetch(`${baseURL}/entrees`).then(res => res.json())
+    return fetch(`${baseURL}/entrees`).then(response => response.json())
 }
 
 export const getVegetables = () => {
-    return fetch(`${baseURL}/vegetables`).then(res => res.json())
+    return fetch(`${baseURL}/vegetables`).then(response => response.json())
 }
 
 export const getSides = () => {
-    return fetch(`${baseURL}/sides`).then(res => res.json())
+    return fetch(`${baseURL}/sides`).then(response => response.json())
 }
 
 export const getPurchases = () => {
-    return fetch(`${baseURL}/purchases`).then(res => res.json())
+    return fetch(`${baseURL}/purchases`).then(response => response.json())
 }
 
 export const savePurchase = (entreeId, vegetableId, sideId, total) => {
@@ -30,5 +30,5 @@ export const savePurchase = (entreeId, vegetableId, sideId, total) => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(purchase)
-    }).then(res => res.json())
+    }).then(response => response.json())
 }

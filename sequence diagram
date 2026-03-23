@@ -1,0 +1,36 @@
+title House of Hummus
+
+    Main->>FoodTruck: generate mainContainer HTML
+    Main<<-FoodTruck: return HTML for mainContainer
+    Main->>FoodTruck: invoke renderAllHTML()
+    
+    FoodTruck->>Entrees: entree options
+    Entrees->>API: fetch /entrees
+    API-->>Entrees: return [entrees] array
+    Entrees-->>FoodTruck: return radio buttons
+ 
+    FoodTruck->>Vegetables: vegetable options
+    Vegetables->>API: fetch /vegetables
+    API-->>Vegetables: return [vegetables] array
+    Vegetables-->>FoodTruck: return radio buttons
+
+    FoodTruck->>Sides: side options
+    Sides->>API: fetch /sides
+    API-->>Sides: return [sides] array
+    Sides-->>FoodTruck: return radio buttons
+
+    FoodTruck->>Sales: sales list
+    Sales->>API: fetch /purchases
+    API-->>Sales: return [purchases] array
+    Sales-->>FoodTruck: receipts/order info
+    FoodTruck-->>Main: return full HTML
+
+    Main->>TransientState: setting functions 
+ 
+    Main->>TransientState: isOrderComplete(), check if true
+    Main<<-TransientState: (return true)
+    Main->>TransientState: if true, getOrder()
+    Main->>dataaccess.js: save this dinner order to permanent data
+    TransientState->>API: POST /purchases to permanent data
+    TransientState->>Main: clearOrder(), ready for new selections
+    Main->>FoodTruck: renderComplete(), getOrder()

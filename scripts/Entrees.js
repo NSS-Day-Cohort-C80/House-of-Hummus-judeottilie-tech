@@ -1,6 +1,12 @@
 import { getEntrees } from "./dataAccess.js"
 import { setEntree } from "./transientState.js"
 
+
+//goes to server and fetches entrees
+export const getEntrees = () => {
+    return fetch(`http://localhost:8088/entrees`).then(response => response.json())
+}
+
 export const Entrees = async () => {
     const entrees = await getEntrees()
 

@@ -1,6 +1,11 @@
 import { getVegetables } from "./dataAccess.js"
 import { setVegetable } from "./transientState.js"
 
+//goes to server and fetches vegetables
+export const getVegetables = () => {
+    return fetch(`http://localhost:8088/vegetables`).then(response => response.json())
+}
+
 export const Vegetables = async () => {
     const vegetablesArray = await getVegetables()
 

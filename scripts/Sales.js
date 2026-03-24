@@ -2,6 +2,28 @@ import { getPurchases, getEntrees, getVegetables, getSides, savePurchase } from 
 import { getOrder, isOrderComplete, clearOrder } from "./transientState.js"
 import { FoodTruck } from "./FoodTruck.js"
 
+//goes to server and fetches purchases
+export const getPurchases = () => {
+    return fetch(`http://localhost:8088/purchases`).then(response => response.json())
+}
+
+export const savePurchase = (entreeId, vegetableId, sideId, total) => {
+    const purchase = {
+        entreeId,
+        vegetableId,
+        sideId,
+        total: parseFloat(total.toFixed(2))
+    }
+
+    return fetch(`http://localhost:8088/purchases`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(purchase)
+    }).then(response => response.json())
+}
+
 export const Sales = async () => {
     const purchases = await getPurchases()
 

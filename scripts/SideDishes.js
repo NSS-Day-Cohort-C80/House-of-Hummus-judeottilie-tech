@@ -1,6 +1,11 @@
 import { getSides } from "./dataAccess.js"
 import { setSide } from "./transientState.js"
 
+//goes to server and fetches sides
+export const getSides = () => {
+    return fetch(`http://localhost:8088/sides`).then(response => response.json())
+}
+
 export const SideDishes = async () => {
     const sides = await getSides()
 

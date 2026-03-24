@@ -1,11 +1,10 @@
-import { getVegetables } from "./dataAccess.js"
 import { setVegetable } from "./transientState.js"
 
 //goes to server and fetches vegetables
-export const getVegetables = () => {
+const getVegetables = () => {
     return fetch(`http://localhost:8088/vegetables`).then(response => response.json())
 }
-
+//builds HTML, await veggie data before moving to next step. when info is returned, runs the .map array method part of the function, looping through each veggie and returning built radio buttons w their information
 export const Vegetables = async () => {
     const vegetablesArray = await getVegetables()
 

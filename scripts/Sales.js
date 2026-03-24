@@ -1,12 +1,11 @@
-import { getPurchases, getEntrees, getVegetables, getSides, savePurchase } from "./dataAccess.js"
 import { getOrder, isOrderComplete, clearOrder } from "./transientState.js"
-import { FoodTruck } from "./FoodTruck.js"
 
-//goes to server and fetches purchases
-export const getPurchases = () => {
+//goes to server and fetches purchase information
+const getPurchases = () => {
     return fetch(`http://localhost:8088/purchases`).then(response => response.json())
 }
 
+ //creates purchase object w the ids and the total amount. parseFloat converts to number, toFixed rounds to the second decimal place. 
 export const savePurchase = (entreeId, vegetableId, sideId, total) => {
     const purchase = {
         entreeId,
@@ -14,7 +13,7 @@ export const savePurchase = (entreeId, vegetableId, sideId, total) => {
         sideId,
         total: parseFloat(total.toFixed(2))
     }
-
+ //sends purchase to JSON server to be made into permanent data. POST is sending NEW data, .stringify converts to text 
     return fetch(`http://localhost:8088/purchases`, {
         method: "POST",
         headers: {
@@ -34,26 +33,3 @@ export const Sales = async () => {
     return html
 }
 
-export const SalesEvents = () => {
-    document.addEventListener("click", async (event) => {
-        if (event.target.id === "purchase") {
-            if (isOrderComplete()) {
-                const order = getOrder()
-
-                const entrees = await getEntrees()
-                const vegetables = await getVegetables()
-                const sides = await getSides()
-
-                const entree = entrees.find(entree => entree.id === order.entreeId)
-                const vegetable = vegetables.find(vegetable => vegetable.id === order.vegetableId)
-                const side = sides.find(side => side.id === order.sideId)
-
-                const total = entree.price + vegetable.price + side.price
-
-                await savePurchase(order.entreeId, order.vegetableId, order.sideId, total)
-                clearOrder()
-                FoodTruck()
-            }
-        }
-    })
-}

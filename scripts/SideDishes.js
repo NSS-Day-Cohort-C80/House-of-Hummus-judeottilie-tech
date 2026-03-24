@@ -1,11 +1,12 @@
-import { getSides } from "./dataAccess.js"
 import { setSide } from "./transientState.js"
 
 //goes to server and fetches sides
-export const getSides = () => {
+const getSides = () => {
     return fetch(`http://localhost:8088/sides`).then(response => response.json())
 }
 
+
+//builds HTML, await sides data before moving to next step. when info is returned, runs the .map array method part of the function, looping through each side and returning built radio buttons w their information
 export const SideDishes = async () => {
     const sides = await getSides()
 

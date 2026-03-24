@@ -2,9 +2,11 @@ import { Sales } from "./Sales.js"
 import { Entrees, EntreeEvents } from "./Entrees.js"
 import { Vegetables, VegetableEvents } from "./Vegetables.js"
 import { SideDishes, SideDishEvents } from "./SideDishes.js"
-import { SalesEvents } from "./Sales.js"
+import { OrderButton, OrderButtonEvents } from "./OrderButton.js"
 
+//async function, awaiting the fetch calls so it has the information it needs. 
 export const FoodTruck = async () => {
+    //connects to the container in the index.html and puts all this info inside of it. each of the awaits call the info and then move to the next once that info is successfully returned. each function is fetching from the server in their own code on their own modules, so we need to wait for that to be returned
     document.querySelector("#container").innerHTML = `
         <header class="header">
             <img src="./images/hummus.png" class="logo" />
@@ -17,8 +19,8 @@ export const FoodTruck = async () => {
             ${await SideDishes()}
         </div>
 
-        <article>
-            <button id="purchase">Purchase Combo</button>
+        <article> 
+            ${await OrderButton()}
         </article>
 
         <article class="customerOrders">
@@ -26,9 +28,9 @@ export const FoodTruck = async () => {
             ${await Sales()}
         </article>
     `
-
+//called after the HTML. can only listen for the event after the HTML is created. will be invoking the events to save the order information 
     EntreeEvents()
     VegetableEvents()
     SideDishEvents()
-    SalesEvents()
+    OrderButtonEvents()
 }

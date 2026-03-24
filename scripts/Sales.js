@@ -1,5 +1,3 @@
-import { getOrder, isOrderComplete, clearOrder } from "./transientState.js"
-
 //goes to server and fetches purchase information
 const getPurchases = () => {
     return fetch(`http://localhost:8088/purchases`).then(response => response.json())
@@ -23,6 +21,7 @@ export const savePurchase = (entreeId, vegetableId, sideId, total) => {
     }).then(response => response.json())
 }
 
+//creates purchase html string and joins it together, also rounds to 2nd decimal with .toFixed
 export const Sales = async () => {
     const purchases = await getPurchases()
 

@@ -30,6 +30,7 @@ export const Vegetables = async () => {
     return html
 }
 
+//click event checking if user clicks radio buttons, checks if clicked radio button is an vegetable and looks at its name, if it matches, saves that ID to the transient state 
 export const VegetableEvents = () => {
     document.addEventListener("change", (event) => {
         if (event.target.name === "vegetable") {

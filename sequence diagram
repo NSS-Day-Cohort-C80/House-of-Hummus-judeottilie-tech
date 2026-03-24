@@ -1,36 +1,47 @@
 title House of Hummus
 
-    Main->>FoodTruck: generate mainContainer HTML
-    Main<<-FoodTruck: return HTML for mainContainer
-    Main->>FoodTruck: invoke renderAllHTML()
+participant Main
+participant FoodTruck
+participant Entrees
+participant API
+participant Vegetables
+participant Sides
+participant Sales
+participant OrderButton
+participant TransientState
     
-    FoodTruck->>Entrees: entree options
-    Entrees->>API: fetch /entrees
-    API-->>Entrees: return [entrees] array
-    Entrees-->>FoodTruck: return radio buttons
+Main->>FoodTruck: renderAllHTML()
+FoodTruck->>Entrees: entree options
+Entrees->>API: fetch /entrees
+API-->>Entrees: return [entrees] array
+Entrees-->FoodTruck: return radio buttons
  
-    FoodTruck->>Vegetables: vegetable options
-    Vegetables->>API: fetch /vegetables
-    API-->>Vegetables: return [vegetables] array
-    Vegetables-->>FoodTruck: return radio buttons
+FoodTruck->>Vegetables: vegetable options
+Vegetables-->API: fetch /vegetables
+API->>Vegetables: return [vegetables] array
+Vegetables-->FoodTruck: return radio buttons
 
-    FoodTruck->>Sides: side options
-    Sides->>API: fetch /sides
-    API-->>Sides: return [sides] array
-    Sides-->>FoodTruck: return radio buttons
+FoodTruck->>Sides: side options
+Sides-->API: fetch /sides
+API->>Sides: return [sides] array
+Sides-->>FoodTruck: return radio buttons
 
-    FoodTruck->>Sales: sales list
-    Sales->>API: fetch /purchases
-    API-->>Sales: return [purchases] array
-    Sales-->>FoodTruck: receipts/order info
-    FoodTruck-->>Main: return full HTML
-
-    Main->>TransientState: setting functions 
+FoodTruck->>Sales: sales list
+Sales-->API: fetch /purchases
+API->>Sales: return [purchases] array
+Sales-->FoodTruck: return receipt
+    
+Main->>TransientState: setting functions setEntree(id), setVegetable(id), setSide(id), isOrderComplete()
  
-    Main->>TransientState: isOrderComplete(), check if true
-    Main<<-TransientState: (return true)
-    Main->>TransientState: if true, getOrder()
-    Main->>sales: save this dinner order to permanent data
-    TransientState->>API: POST /purchases to permanent data
-    TransientState->>Main: clearOrder(), ready for new selections
-    Main->>FoodTruck: renderComplete(), getOrder()
+Main<--TransientState: TRUE! 
+Main->>TransientState: if true, getOrder()
+TransientState-->OrderButton: Return the selected current order
+OrderButton->>TransientState: Click! Here is the selected order for permanent data
+
+  
+Sales->>OrderButton: take this receipt number for the order
+TransientState-->API: POST to permanent data and save it
+Main->>FoodTruck: Generate HTML strings for the main container
+    
+Main<--TransientState: clearOrder(), ready for new selections
+FoodTruck<<-Main: Ready for next order! Re-render!

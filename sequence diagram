@@ -30,7 +30,7 @@ title House of Hummus
     Main->>TransientState: isOrderComplete(), check if true
     Main<<-TransientState: (return true)
     Main->>TransientState: if true, getOrder()
-    Main->>dataaccess.js: save this dinner order to permanent data
+    Main->>sales: save this dinner order to permanent data
     TransientState->>API: POST /purchases to permanent data
     TransientState->>Main: clearOrder(), ready for new selections
     Main->>FoodTruck: renderComplete(), getOrder()
